@@ -9,7 +9,7 @@ yum -y install wget
 
 first, please don't reboot vps ********
 
-01:install bbr plus 
+01:install bbr plus , select 3- BBRplus
 ```bash
 wget --no-check-certificate -O onefast.sh https://raw.githubusercontent.com/caonimagfw/onefast/master/onefast.sh && bash onefast.sh
 ```
@@ -28,8 +28,8 @@ run 01:
 
 select bbr plus 
 ```bash
-run bash onefast.sh: select bbr plus mode 
-run bash onefast.sh: select 11 optimizing network setting 
+run bash onefast.sh: select 8:open bbr plus mode 
+run bash onefast.sh: select 11: optimizing network setting 
 ```
 
 modify ssr setting:
