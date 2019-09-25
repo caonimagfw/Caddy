@@ -20,7 +20,7 @@ wget --no-check-certificate -O shadowsocksR.sh https://raw.githubusercontent.com
 
 03:install caddy 
 ```bash
-wget --no-check-certificate -O shadowsocksR.sh https://raw.githubusercontent.com/caonimagfw/Caddy/master/caddy_install.sh && bash caddy_install.sh
+wget --no-check-certificate -O caddy_install.sh https://raw.githubusercontent.com/caonimagfw/Caddy/master/caddy_install.sh && bash caddy_install.sh
 ```
 reboot vps
 
