@@ -15,7 +15,7 @@ wget --no-check-certificate -O onefast.sh https://raw.githubusercontent.com/caon
 ```
 02:install ssr for caddy
 ```bash
-wget --no-check-certificate -O shadowsocksR.sh https://raw.githubusercontent.com/caonimagfw/ssr/master/shadowsocksRForCaddy.sh && bash shadowsocksRForCaddy.sh
+wget --no-check-certificate -O shadowsocksRForCaddy.sh https://raw.githubusercontent.com/caonimagfw/ssr/master/shadowsocksRForCaddy.sh && bash shadowsocksRForCaddy.sh
 ```
 
 03:install caddy 
