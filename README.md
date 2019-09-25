@@ -8,6 +8,7 @@ yum -y install wget
 
 
 first, please don't reboot vps ********
+
 01:install bbr plus 
 ```bash
 wget --no-check-certificate -O onefast.sh https://raw.githubusercontent.com/caonimagfw/onefast/master/onefast.sh && bash onefast.sh
