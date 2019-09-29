@@ -139,3 +139,5 @@ IPV6_DEFAULTGW="fe80::1"
 DNS3=2001:4860:4860::8888
 DNS4=2001:4860:4860::8844
 ```
+
+systemctl restart network
