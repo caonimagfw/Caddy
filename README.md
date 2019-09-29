@@ -42,7 +42,7 @@ bash shadowsocksRForCaddy.sh modify
 vim /etc/selinux/config
 
 禁止ping 
-
+```bash
 # echo “net.ipv4.icmp_echo_ignore_all = 1” >> /etc/sysctl.conf 
 # sysctl -p
 
@@ -53,7 +53,7 @@ firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --add-port=9999/tcp --permanent
 
 firewall-cmd --zone=public --remove-port=22/tcp --permanent
-
+```
 
 #修改ssh 端口
 ```bash
