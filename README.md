@@ -22,7 +22,7 @@ wget --no-check-certificate -O shadowsocksRForCaddy.sh https://raw.githubusercon
   
 02:install ssr IPV4 for caddy
 ```bash
-wget --no-check-certificate -O shadowsocksRForCaddy.sh https://raw.githubusercontent.com/caonimagfw/ssr/master/shadowForCaddyIpv4.sh && bash shadowForCaddyIpv4.sh
+wget --no-check-certificate -O shadowForCaddyIpv4.sh https://raw.githubusercontent.com/caonimagfw/ssr/master/shadowForCaddyIpv4.sh && bash shadowForCaddyIpv4.sh
 ```
 
 03:install caddy 
