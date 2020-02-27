@@ -112,7 +112,7 @@ systemctl enable firewalld
 ```
 #停止并禁用开机启动
 ```bash
-sytemctl disable firewalld
+systemctl disable firewalld
 ```
 查看所有已开放端口
 ```bash
