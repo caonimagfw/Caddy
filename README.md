@@ -128,6 +128,7 @@ systemctl status firewalld
 firewall-cmd --state
 ```
 
+systemctl mask --now firewalld
 #ipv6添加, 设置IPV6_AUTOCONF = "yes"
 ```bash
 vi /etc/sysconfig/network
