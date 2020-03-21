@@ -152,3 +152,7 @@ systemctl restart network
 ClientAliveInterval 120
 ClientAliveCountMax 720
 
+dpkg --add-architecture i386
+
+
+apt-get update
