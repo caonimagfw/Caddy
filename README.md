@@ -156,3 +156,5 @@ dpkg --add-architecture i386
 
 
 apt-get update
+
+make V=99 -i
