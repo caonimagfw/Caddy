@@ -147,3 +147,8 @@ DNS4=2001:4860:4860::8844
 ```
 
 systemctl restart network
+/etc/ssh/sshd_config
+
+ClientAliveInterval 120
+ClientAliveCountMax 720
+
