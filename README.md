@@ -199,7 +199,7 @@ toyoo.pw {
 :8100 {
 	root /usr/local/caddy/www
 	timeouts none
-	tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+	tls /root/ssl/xxx.net/cert.pem /root/ssl/xxx.net/privkey.pem
 	gzip
 }
 
@@ -218,7 +218,7 @@ toyoo.pw {
 :443 {
 	root /usr/local/caddy/www
 	timeouts none
-	tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+	tls /root/ssl/xxx.net/cert.pem /root/ssl/xxx.net/privkey.pem
 	gzip
 }
 
