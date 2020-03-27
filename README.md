@@ -144,8 +144,10 @@ IPV6ADDR_SECONDARIES="第二个ipv6/64 第三个ipv6/64 第N个IPV6/64"  ###注�
 IPV6_DEFAULTGW="fe80::1"
 DNS3=2001:4860:4860::8888
 DNS4=2001:4860:4860::8844
+
 ```
 
+```
 systemctl restart network
 /etc/ssh/sshd_config
 
@@ -154,7 +156,77 @@ ClientAliveCountMax 720
 
 dpkg --add-architecture i386
 
-
 apt-get update
-
 make V=99 -i
+
+```
+
+#申请 证书
+```
+yum -y install git
+python -v #确保Python版本大于2.7
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel
+git clone https://github.com/letsencrypt/letsencrypt
+cd letsencrypt/
+./certbot-auto --server https://acme-v02.api.letsencrypt.org/directory -d "*.7even.online" --manual --preferred-challenges dns-01 certonly
+--manual交互式获取，--preferred-challenges dns使用DNS验证的方式（泛域名只能使用DNS验证），--server指明支持acme-v02的Server地址，默认是acme-v01的地址。
+
+```
+
+#文件介绍
+```
+生成证书中会创建 /etc/letsencrypt 文件夹，证书文件默认存放在 /etc/letsencrypt/live/example.com 文件夹中，在 example.com 文件夹中包含 4 个文件
+• cert.pem 域名证书
+• chain.pem 根证书及中间证书
+• fullchain.pem 由 cert.pem 和 chain.pem 合并而成
+• privkey.pem 证书私钥
+
+1
+$ certbot-auto renew
+
+toyoo.pw {
+ gzip
+ tls /root/xxx.crt /root/xxx.key
+ proxy / https://www.google.com.hk
+}
+```
+
+
+
+#443 use ####################
+```
+#caddy --------------
+:8100 {
+	root /usr/local/caddy/www
+	timeouts none
+	tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+	gzip
+}
+
+:80 {
+	redir https://xxx.net{uri}
+}
+
+#config--------------
+"server_port":443
+ "redirect":["*:443#127.0.0.1:8100"],
+```
+
+#80 use ###############
+```
+#caddy --------------
+:443 {
+	root /usr/local/caddy/www
+	timeouts none
+	tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+	gzip
+}
+
+:8099 {
+	redir https://xxx.net{uri}
+}
+
+#config--------------
+"server_port":80
+ "redirect":["*:80#127.0.0.1:8099"],
+```
