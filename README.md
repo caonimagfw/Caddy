@@ -236,3 +236,9 @@ toyoo.pw {
 ```
 wget https://raw.githubusercontent.com/caonimagfw/ssr/master/sethost.sh
 ```
+
+https://app.cloudcone.com/compute/507/create/?ref=5179
+
+https://app.cloudcone.com/compute/508/create/?ref=5179
+
+https://app.cloudcone.com/?ref=5179
