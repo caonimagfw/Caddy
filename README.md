@@ -230,3 +230,9 @@ toyoo.pw {
 "server_port":80
  "redirect":["*:80#127.0.0.1:8099"],
 ```
+
+#bash sethost.sh xxx.net aa.xxx.net 80 "passwd"
+#set host 
+```
+wget https://raw.githubusercontent.com/caonimagfw/ssr/master/sethost.sh
+```
