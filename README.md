@@ -242,3 +242,29 @@ https://app.cloudcone.com/compute/507/create/?ref=5179
 https://app.cloudcone.com/compute/508/create/?ref=5179
 
 https://app.cloudcone.com/?ref=5179
+
+
+
+--music 
+ node app.js -o joox kugou qq kuwo  -p 20000 -e https://xxx.bmwpay.net
+
+  :443 {
+            #root /usr/local/caddy/www
+            proxy / http://127.0.0.1:20000
+            timeouts none
+            tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+            gzip
+    }
+    :29999 {
+            tls /root/ssl/bmwpay.net/cert.pem /root/ssl/bmwpay.net/privkey.pem
+            gzip
+            proxy / http://127.0.0.1:20000
+            header / {
+                    HOST 'music.163.com'
+            }
+    }
+
+
+    :8099 {
+            redir https://xxxx.bmwpay.net{uri}
+    }
