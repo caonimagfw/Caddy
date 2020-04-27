@@ -280,6 +280,10 @@ yum install -y iptables
 yum update iptables 
 #安装iptables-services
 yum install iptables-services
+#停止firewalld服务
+systemctl stop firewalld
+#禁用firewalld服务
+systemctl mask firewalld
 ```
 
 ### Open Iptables 
@@ -314,4 +318,17 @@ iptables -P INPUT DROP
 iptables -P OUTPUT ACCEPT
 #所有转发一律丢弃
 iptables -P FORWARD DROP
+```
+
+### Save rules and start 
+```
+#保存上述规则
+service iptables save
+#注册iptables服务
+#相当于以前的chkconfig iptables on
+systemctl enable iptables.service
+#开启服务
+systemctl start iptables.service
+#查看状态
+systemctl status iptables.service
 ```
