@@ -80,11 +80,15 @@ firewall-cmd --zone=public --add-port=8080/udp --permanent
 ```bash
 firewall-cmd --zone=public --remove-port=8080/tcp --permanent
 firewall-cmd --zone=public --remove-port=8080/udp --permanent
+firewall-cmd --zone=public --remove-port=443/tcp --permanent
 ```
 #批量添加5000-5500区间端口
 ```bash
+firewall-cmd --zone=public --add-port=422/tcp --add-port=3000/tcp --add-port=53/tcp --add-port=53/udp --permanent
+firewall-cmd --zone=public --add-port=8100/tcp --permanent
 firewall-cmd --zone=public --add-port=5000-5500/udp --permanent
 firewall-cmd --zone=public --add-port=5000-5500/tcp --permanent
+firewall-cmd --zone=public --add-port=888/tcp --permanent
 ```
 #批量关闭5000-5500区间端口
 ```bash
@@ -103,12 +107,13 @@ service firewalld restart
 ```
 #关闭禁用防火墙（嫌一个个开端口麻烦直接关闭防火墙也可以）
 ```bash
-systemctl stop firewalld
+systemctl stop firewalld && systemctl disable firewalld
 ```
 设置开机（禁用开机）防火墙
 #开机启动
 ```bash
 systemctl enable firewalld
+firewall-cmd --add-port=443/tcp --permanent 
 ```
 #停止并禁用开机启动
 ```bash
@@ -339,4 +344,9 @@ systemctl enable iptables.service
 systemctl start iptables.service
 #查看状态
 systemctl status iptables.service
+```
+
+##Unar
+```
+yum install -y epel-release && yum install -y unar
 ```
