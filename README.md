@@ -350,3 +350,57 @@ systemctl status iptables.service
 ```
 yum install -y epel-release && yum install -y unar
 ```
+
+```
+wget http://www.rarsoft.com/rar/rarlinux-x64-5.4.0.tar.gz
+tar -zxvf rarlinux-x64-5.4.0.tar.gz && cd rar && make
+
+mkdir -p /usr/local/bin
+mkdir -p /usr/local/lib
+cp rar unrar /usr/local/bin
+cp rarfiles.lst /etc
+cp default.sfx /usr/local/lib
+
+
+$ rar x centos.rar # 解压 centos.rar 到当前目录
+```
+
+## minial mal 
+```
+
+fdisk -l
+df -h
+
+
+resize2fs /dev/vda1 8G
+
+yum groupinstall "Base"
+yum grouplist
+```
+
+## go 
+```
+#wget
+yum -y install wget unzip zip 
+
+#rar
+wget http://www.rarsoft.com/rar/rarlinux-x64-5.4.0.tar.gz
+tar -zxvf rarlinux-x64-5.4.0.tar.gz && cd rar && make
+
+#caddy 
+wget --no-check-certificate -O caddy_install.sh https://raw.githubusercontent.com/caonimagfw/Caddy/master/caddy_install.sh && bash caddy_install.sh
+
+#ssl
+cd /root && mkdir ssl && cd ssl 
+wget https://github.com/caonimagfw/ssr/raw/master/ssl/ssl.rar
+
+rar x ssl.rar
+
+#go go 
+wget https://github.com/caonimagfw/trojan/raw/master/Trojan-go.sh
+bash Trojan-go.sh
+
+# bbr 
+wget --no-check-certificate -O onefast.sh https://raw.githubusercontent.com/caonimagfw/onefast/master/onefast.sh && bash onefast.sh
+```
+
