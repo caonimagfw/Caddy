@@ -112,7 +112,7 @@ systemctl stop firewalld && systemctl disable firewalld
 设置开机（禁用开机）防火墙
 #开机启动
 ```bash
-systemctl enable firewalld
+systemctl stop firewalld && systemctl disable firewalld
 firewall-cmd --add-port=443/tcp --permanent 
 ```
 #停止并禁用开机启动
@@ -330,7 +330,7 @@ iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT
 
 
 #所有转发一律丢弃
-iptables -P FORWARD DROP
+iptables -P FORWARD ACCEPT
 ```
 
 ### Save rules and start 
@@ -400,7 +400,116 @@ rar x ssl.rar
 wget https://github.com/caonimagfw/trojan/raw/master/Trojan-go.sh
 bash Trojan-go.sh
 
+systemctl enable trojan-go
+
 # bbr 
 wget --no-check-certificate -O onefast.sh https://raw.githubusercontent.com/caonimagfw/onefast/master/onefast.sh && bash onefast.sh
 ```
 
+```
+yum install -y epel-release && yum install -y wget zip unzip unar net-tools
+
+firewall-cmd --zone=public --add-port=80/tcp --add-port=443/tcp --add-port=8100/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --permanent --list-port
+systemctl restart firewalld 
+firewall-cmd --permanent --list-port
+firewall-cmd --state
+
+yum -y install wget zip unzip unar
+
+
+```firewall-cmd --zone=public --add-port=8199/tcp 
+
+
+```
+
+wget -N -O 4.14.182-bbrplus.rpm https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-4.14.182-bbrplus.rpm
+wget -N -O 4.14.182-bbrplus_header.rpm https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-headers-4.14.182_bbrplus.rpm
+https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-headers-4.14.182_bbrplus.rpm
+
+yum install -y 4.14.182-bbrplus.rpm 4.14.182-bbrplus_header.rpm
+
+# check list 
+rpm -qa | grep kernel
+
+# set boot list 
+grep '^menuentry' /boot/grub2/grub.cfg |cut -d "'" -f 2  # all boot list
+grub2-set-default 0
+
+
+reboot 
+
+# ceck 
+cat /etc/redhat-release
+uname -r
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
+yum --enablerepo=elrepo-kernel install -y kernel-ml
+
+
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=cubic
+
+# 
+# reboot
+# uname -r
+
+
+rpm -qa |grep kernel-[0-9]  # 查看全部内核包
+yum remove kernel-3.10.0-327.el7.x86_64  # 删除指定的无用内核
+
+
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+# 安装ELRepo
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+# 载入elrepo-kernel元数据
+yum --disablerepo=\* --enablerepo=elrepo-kernel repolist
+# 查看可用的rpm包
+yum --disablerepo=\* --enablerepo=elrepo-kernel list kernel*
+# 安装最新版本的kernel
+yum --disablerepo=\* --enablerepo=elrepo-kernel install -y kernel-ml.x86_64
+
+lsmod | grep bbr
+modprobe tcp_bbr
+sysctl net.ipv4.tcp_available_congestion_control
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+
+
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=cubic
+
+/sbin/modprobe tcp_hybla
+sysctl -w net.ipv4.tcp_congestion_control=hybla
+sysctl -w net.ipv4.tcp_congestion_control=bbr
+sysctl -w net.ipv4.tcp_congestion_control=cubic
+
+
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+
+
+```
+
+
+# set ssh port 
+    ```
+    firewall-cmd --zone=public --add-port=58899/tcp --permanent
+    firewall-cmd --reload && firewall-cmd --permanent --list-all --zone=public
+    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+
+    vi /etc/ssh/sshd_config
+
+
+    systemctl restart sshd
+
+    yum provides semanage
+    yum -y install policycoreutils-python
+
+    semanage port -a -t ssh_port_t -p tcp 58899
+    semanage port -l | grep ssh
+    semanage port -d -t ssh_port_t -p tcp 22
+    semanage port -l | grep ssh
+    firewall-cmd --zone=public --remove-port=22/tcp --permanent && firewall-cmd --reload 
+    ```
