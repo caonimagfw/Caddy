@@ -457,6 +457,10 @@ sysctl -w net.ipv4.tcp_congestion_control=cubic
 # uname -r
 
 
+rpm -qa | grep kernel
+
+
+
 rpm -qa |grep kernel-[0-9]  # 查看全部内核包
 yum remove kernel-3.10.0-327.el7.x86_64  # 删除指定的无用内核
 
@@ -513,3 +517,17 @@ echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
     semanage port -l | grep ssh
     firewall-cmd --zone=public --remove-port=22/tcp --permanent && firewall-cmd --reload 
     ```
+
+
+# swap memory 
+```
+cat /proc/swaps
+mkdir /data
+dd if=/dev/zero of=/data/swap bs=128 count=8388616
+mkswap /data/swap
+swapon /data/swap   
+echo "/data/swap swap swap defaults    0  0" >> /etc/fstab
+
+free -h
+
+```
