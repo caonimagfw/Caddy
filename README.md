@@ -424,11 +424,45 @@ yum -y install wget zip unzip unar
 
 ```
 
+wget -N -O 5.5.10-zen.rpm https://github.com/caonimagfw/onefast/raw/master/bbr/centos/7/x64/kernel-5.5.10_zen1-1-c7.x86_64.rpm
+wget -N -O 5.5.10-zen_header.rpm https://github.com/caonimagfw/onefast/raw/master/bbr/centos/7/x64/kernel-headers-5.5.10_zen1-1-c7.x86_64.rpm
+
+yum remove -y kernel-headers
+yum install -y 5.5.10-zen_header.rpm 5.5.10-zen.rpm
+
+sudo egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \'
+sudo grub2-set-default 0
+
+
+sysctl -w net.core.default_qdisc=cake
+sysctl -w net.ipv4.tcp_congestion_control=bbr
+
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=bbr
+
+
 wget -N -O 4.14.182-bbrplus.rpm https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-4.14.182-bbrplus.rpm
 wget -N -O 4.14.182-bbrplus_header.rpm https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-headers-4.14.182_bbrplus.rpm
 https://github.com/caonimagfw/onefast/raw/master/bbrplus/centos/7/kernel-headers-4.14.182_bbrplus.rpm
 
+yum remove -y kernel-headers
 yum install -y 4.14.182-bbrplus.rpm 4.14.182-bbrplus_header.rpm
+
+sudo egrep ^menuentry /etc/grub2.cfg | cut -f 2 -d \'
+sudo grub2-set-default 0
+
+lsmod | grep bbr
+modprobe tcp_bbr
+modprobe tcp_bbrplus
+sysctl net.ipv4.tcp_available_congestion_control
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+sysctl net.ipv4.tcp_congestion_control
+
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=bbrplus
+
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=bbr
 
 # check list 
 rpm -qa | grep kernel
@@ -441,7 +475,8 @@ grub2-set-default 0
 reboot 
 
 # ceck 
-cat /etc/redhat-release
+cat /etc/redhat-release && uname -r
+
 uname -r
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
@@ -450,7 +485,7 @@ yum --enablerepo=elrepo-kernel install -y kernel-ml
 
 
 sysctl -w net.core.default_qdisc=fq
-sysctl -w net.ipv4.tcp_congestion_control=cubic
+sysctl -w net.ipv4.tcp_congestion_control=bbrplus
 
 # 
 # reboot
@@ -478,7 +513,9 @@ yum --disablerepo=\* --enablerepo=elrepo-kernel install -y kernel-ml.x86_64
 lsmod | grep bbr
 modprobe tcp_bbr
 sysctl net.ipv4.tcp_available_congestion_control
-echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+echo "tcp_bbrplus" >> /etc/modules-load.d/modules.conf
+
+sysctl net.ipv4.tcp_congestion_control
 
 
 sysctl -w net.core.default_qdisc=fq
@@ -488,6 +525,11 @@ sysctl -w net.ipv4.tcp_congestion_control=cubic
 sysctl -w net.ipv4.tcp_congestion_control=hybla
 sysctl -w net.ipv4.tcp_congestion_control=bbr
 sysctl -w net.ipv4.tcp_congestion_control=cubic
+
+modprobe tcp_bbr
+sysctl -w net.core.default_qdisc=fq
+sysctl -w net.ipv4.tcp_congestion_control=bbr
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
 
 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
