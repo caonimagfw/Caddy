@@ -51,7 +51,7 @@ Download_caddy(){
 	fi
 	
 	if [[ ${bit} == "x86_64" ]]; then
-		wget --no-check-certificate -O "caddy_linux.tar.gz" "https://raw.githubusercontent.com/caonimagfw/Caddy/master/download/caddy_v1.0.3_linux_amd64.tar.gz"
+		wget --no-check-certificate -O "caddy_linux.tar.gz" "https://github.com/caonimagfw/Caddy/releases/download/2.6.2/caddy_2.6.2_linux_amd64.tar.gz"
 	elif [[ ${bit} == "i386" || ${bit} == "i686" ]]; then
 		wget --no-check-certificate -O "caddy_linux.tar.gz" "https://raw.githubusercontent.com/caonimagfw/Caddy/master/download/caddy_v1.0.3_linux_386.tar.gz"
 	elif [[ ${bit} == "armv7l" ]]; then
